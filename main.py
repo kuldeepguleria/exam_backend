@@ -329,7 +329,7 @@ def get_vault_explanations(payload: VaultRequest):
 def ask_mentor(query: MentorQuery):
     if not groq_client:
         return MentorResponse(
-            reply="Main aapka Mindset Mentor hoon. 5 minute ka break lijiye aur fresh mind se dubara practice shuru kijiye!"
+            reply="Hello! Kaisi chal rahi hai taiyari? Aaj kya padh rahe ho?"
         )
     
     try:
