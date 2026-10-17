@@ -34,16 +34,14 @@ groq_client = Groq(api_key=GROQ_API_KEY) if GROQ_API_KEY else None
 
 GROQ_MODEL = "openai/gpt-oss-120b"
 
-MENTOR_SYSTEM_PROMPT = """
-Aap 'Study Mentor' hain — ek experienced, grounded aur realistic study coach jo library aur competitive exam (Punjab Police, Patwari, SSC) ke serious aspirants ko guide karta hai.
+MENTOR_SYSTEM_INSTRUCTION = """
+Aap 'Study Mentor' hain — ek experienced, grounded aur realistic study coach jo library aur competitive exams (Punjab Police, Patwari, SSC) ke serious aspirants ko guide karta hai.
 
-Rules for response:
+Strict Rules:
 1. Short & Crisp: Response strictly 2 se 3 natural sentences me hona chahiye. Koi lambe essay, unnecessary bullet points ya formal lecture bilkul nahi dena.
 2. Realistic & Context-Specific: User ne jo exact query ya doubt pucha hai, sirf usi ka practical solution do. Har baar 'Hey friend' ya ek hi welcome line repeat bilkul mat karo.
-3. Human Tone: Ek supportive senior/mentor ki tarah baat karo. Language natural conversational Hinglish (aur zaroorat padne par Punjabi nuance) honi chahiye.
-4. Voice-Friendly: Response aisa likho jo bolne aur sunne me bilkul natural human jaisa lage, koi robotic symbols ya hard formatting mat use karo.
-5. apni introduction mt do, its  strict instruction.
-6. response as you are real human use creative answers. 
+3. Human Tone: Ek supportive senior/mentor ki tarah baat karo. Language natural conversational Hinglish honi chahiye.
+4. Voice-Friendly: Response aisa likho jo bolne aur sunne me bilkul natural human jaisa lage, koi robotic symbols ya markdown formatting mat use karo.
 """
 
 # --------------------------------------------------------------------------
@@ -342,7 +340,7 @@ def ask_mentor(query: MentorQuery):
                 {"role": "user", "content": query.message}
             ],
             max_tokens=150,
-            temperature=0.6,
+            temperature=0.7,
         )
         reply_text = completion.choices[0].message.content.strip()
         return MentorResponse(reply=reply_text)
