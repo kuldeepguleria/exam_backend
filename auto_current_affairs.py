@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # 1. Setup Clients
-groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+groq_client = Groq(api_key="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")
 sheet_client = gspread.service_account(filename="service_account.json")
 worksheet = sheet_client.open("youth_library_questions").worksheet("current_affairs")
 
