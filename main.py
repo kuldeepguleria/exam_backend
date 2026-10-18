@@ -359,3 +359,6 @@ def refresh_cache():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+
+print("GROQ CLIENT STATUS:", bool(groq_client))
+print("SYSTEM PROMPT SENT:", MENTOR_SYSTEM_INSTRUCTION[:100])
