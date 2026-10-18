@@ -15,8 +15,8 @@ worksheet = sheet_client.open("youth_library_questions").worksheet("current_affa
 # 2. Fetch Live RSS Headlines (The Tribune / PIB)
 # 2. Reliable Google News RSS Feeds (Ye kabhi block nahi hoti)
 RSS_FEEDS = [
-    "https://news.google.com/rss/search?q=Punjab+government+exam&hl=en-IN&gl=IN&ceid=IN:en",
-    "https://news.google.com/rss/search?q=India+national+news+economy+policy&hl=en-IN&gl=IN&ceid=IN:en"
+    "https://news.google.com/rss/search?q=Punjab+government+scheme+OR+cabinet+decision&hl=en-IN&gl=IN&ceid=IN:en",
+    "https://news.google.com/rss/search?q=India+national+policy+economy+MoU&hl=en-IN&gl=IN&ceid=IN:en"
 ]
 
 def fetch_live_headlines():
@@ -41,25 +41,26 @@ def generate_and_update_affairs():
         return
 
     prompt = f"""
-Strict Instruction: Summarize ONLY the actual facts present in the Raw News Data below.
-DO NOT fabricate, guess, or invent any news, percentages, or government acts.
+Strict Instruction:
+1. Summarize ONLY actual government policy, schemes, appointments, or national/state events.
+2. DO NOT include test series, cut-off marks, answer keys, results, or coaching institute names (like Adda247, Testbook, etc.).
+3. Write completely neutral text without mentioning any third-party website or coaching platform.
 
 Raw News Data:
 {raw_news}
 
-
 Format Guidelines:
-- Category: Either 'Punjab' or 'National'
-- Title: Crisp, professional news headline (under 12 words)
-- Desc: 1-2 lines summarizing the event + exam importance (e.g., historical linkage, ministry, act, scheme)
-- Tag: Relevant topic (e.g., 'Polity', 'Agriculture', 'Governance', 'Economy')
+• Category: Either 'Punjab' or 'National'
+• Title: Crisp news headline under 12 words
+• Desc: 1-2 lines summarizing the event and its importance for exams
+• Tag: Relevant topic like Polity, Agriculture, Governance, Economy
 
 Return ONLY a valid JSON array matching this exact schema:
 [
   {{
     "category": "Punjab",
-    "title": "Headline text here",
-    "desc": "Exam-relevant summary with policy or static fact",
+    "title": "Headline",
+    "desc": "Description text",
     "tag": "Governance"
   }}
 ]
