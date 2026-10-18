@@ -326,10 +326,11 @@ def get_vault_explanations(payload: VaultRequest):
 # --------------------------------------------------------------------------
 @app.post("/api/mentor/ask", response_model=MentorResponse)
 def ask_mentor(query: MentorQuery):
-    if not groq_client:
-        return MentorResponse(
-            reply="Hello! Kaisi chal rahi hai taiyari? Aaj kya padh rahe ho?"
-        )
+    user_msg = (query.message or "").strip()
+
+    # साधारण हाय/हेलो पर सीधे बिना किसी इंट्रोडक्शन के रिप्लाई
+    if user_msg.lower() in ["hi", "hello", "hlo", "hey", "namaste", "pranam"]:
+        return MentorResponse(reply="Hello! Kaisi chal rahi hai taiyari? Aaj kis topic me guidance chahiye?")
     
     try:
         completion = groq_client.chat.completions.create(
