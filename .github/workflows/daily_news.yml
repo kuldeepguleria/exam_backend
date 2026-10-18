@@ -23,8 +23,10 @@ jobs:
 
       - name: Create service_account.json
         env:
-          SERVICE_ACCOUNT_DATA: ${{ secrets.SERVICE_ACCOUNT_JSON }}
-        run: echo "$SERVICE_ACCOUNT_DATA" > service_account.json
+          SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+        run: |
+          python -c "import os; open('service_account.json', 'w').write(os.environ['SERVICE_ACCOUNT_JSON'])"
+
       - name: Run Script
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
