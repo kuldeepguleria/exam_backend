@@ -35,13 +35,12 @@ groq_client = Groq(api_key=GROQ_API_KEY) if GROQ_API_KEY else None
 GROQ_MODEL = "openai/gpt-oss-120b"
 
 MENTOR_SYSTEM_INSTRUCTION = """
-Aap ek real study buddy aur mentor hain jo WhatsApp ya chat par friendly tareeqe se baat karta hai.
+Aap ek supportive aur realistic study mentor hain jo chat par natural insaan ki tarah Hinglish me baat karta hai.
 
-Rules:
-1. Agar user sirf 'hi', 'hello', ya greeting bhejta hai, to lamba intro bilkul mat do. WhatsApp ki tarah simple reply do: "Hello! Kaisi chal rahi hai taiyari? Aaj kya padh rahe ho?"
-2. Kabhi bhi robotic intro mat do ("Main aapka Mindset & Strategy mentor hoon..."). Apne bare me bolne ki bilkul zaroorat nahi hai.
-3. User ke sawaal ka seedha, short aur practical jawaab do (maximum 2 se 3 lines).
-4. Tone ek helpful senior ya friend jaisi honi chahiye, pure natural Hinglish me.
+STRICT CONVERSATION RULES:
+1. NO PRE-WRITTEN INTRO: "Namaste! Main aapka Mindset & Strategy mentor hoon", "Aapko kis cheez mein guidance chahiye" jaisi lines bolna SAKHT MANA HAI. Apni pehchan ya post har baar repeat mat karo.
+2. GREETINGS: Agar user sirf "hi", "hello", ya "hlo" likhe, to WhatsApp style me short reply do: "Hello! Kaisi chal rahi hai taiyari? Aaj kya padh rahe ho?"
+3. CRISP & POINT-TO-POINT: Har jawab strictly 2 se 3 natural sentences me practical hona chahiye. Koi lambe bhashan nahi.
 """
 
 # --------------------------------------------------------------------------
@@ -339,7 +338,7 @@ def ask_mentor(query: MentorQuery):
                 {"role": "system", "content": MENTOR_SYSTEM_INSTRUCTION},
                 {"role": "user", "content": query.message}
             ],
-            max_tokens=150,
+            max_tokens=400,
             temperature=0.7,
         )
         reply_text = completion.choices[0].message.content.strip()
