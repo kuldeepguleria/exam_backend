@@ -13,9 +13,10 @@ sheet_client = gspread.service_account(filename="service_account.json")
 worksheet = sheet_client.open("youth_library_questions").worksheet("current_affairs")
 
 # 2. Fetch Live RSS Headlines (The Tribune / PIB)
+# 2. Reliable Google News RSS Feeds (Ye kabhi block nahi hoti)
 RSS_FEEDS = [
-    "https://www.tribuneindia.com/rss/punjab.xml", # Punjab regional updates
-    "https://pib.gov.in/RssMain.aspx?ModId=6&Lang=1" # National policy & schemes
+    "https://news.google.com/rss/search?q=Punjab+government+exam&hl=en-IN&gl=IN&ceid=IN:en",
+    "https://news.google.com/rss/search?q=India+national+news+economy+policy&hl=en-IN&gl=IN&ceid=IN:en"
 ]
 
 def fetch_live_headlines():
@@ -23,8 +24,9 @@ def fetch_live_headlines():
     for url in RSS_FEEDS:
         try:
             feed = feedparser.parse(url)
-            for entry in feed.entries[:5]: # Top 5 headlines per source
-                headlines.append(f"Title: {entry.title} - Summary: {entry.get('summary', '')}")
+            for entry in feed.entries[:5]:
+                summary_text = entry.get('summary', '') or entry.get('description', '')
+                headlines.append(f"Title: {entry.title} - Details: {summary_text}")
         except Exception as e:
             print(f"Feed error {url}: {e}")
     return "\n".join(headlines[:8])
@@ -33,11 +35,18 @@ def fetch_live_headlines():
 def generate_and_update_affairs():
     raw_news = fetch_live_headlines()
     
+    # AGAR NEWS NAHI MILI TOH AI CALL HI NAHI HOGA (Fake News Stop)
+    if not raw_news.strip():
+        print("ERROR: No real news fetched from RSS. Aborting to prevent fake news.")
+        return
+
     prompt = f"""
-Convert these raw news headlines into exactly 4 high-yield, exam-relevant Current Affairs cards for Punjab competitive exams (Punjab Police, Patwari).
+Strict Instruction: Summarize ONLY the actual facts present in the Raw News Data below.
+DO NOT fabricate, guess, or invent any news, percentages, or government acts.
 
 Raw News Data:
 {raw_news}
+"""
 
 Format Guidelines:
 • Category: Either 'Punjab' or 'National'
