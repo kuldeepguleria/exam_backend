@@ -46,7 +46,7 @@ DO NOT fabricate, guess, or invent any news, percentages, or government acts.
 
 Raw News Data:
 {raw_news}
-"""
+
 
 Format Guidelines:
 - Category: Either 'Punjab' or 'National'
