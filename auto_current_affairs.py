@@ -49,10 +49,10 @@ Raw News Data:
 """
 
 Format Guidelines:
-• Category: Either 'Punjab' or 'National'
-• Title: Crisp, professional news headline (under 12 words)
-• Desc: 1-2 lines summarizing the event + exam importance (e.g., historical linkage, ministry, act, scheme)
-• Tag: Relevant topic (e.g., 'Polity', 'Agriculture', 'Governance', 'Economy')
+- Category: Either 'Punjab' or 'National'
+- Title: Crisp, professional news headline (under 12 words)
+- Desc: 1-2 lines summarizing the event + exam importance (e.g., historical linkage, ministry, act, scheme)
+- Tag: Relevant topic (e.g., 'Polity', 'Agriculture', 'Governance', 'Economy')
 
 Return ONLY a valid JSON array matching this exact schema:
 [
