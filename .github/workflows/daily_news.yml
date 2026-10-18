@@ -22,10 +22,8 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Create service_account.json
-        env:
-          SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
         run: |
-          python -c "import os; open('service_account.json', 'w').write(os.environ['SERVICE_ACCOUNT_JSON'])"
+         echo "${{ secrets.SERVICE_ACCOUNT_JSON }}" | base64 --decode > service_account.json
 
       - name: Run Script
         env:
